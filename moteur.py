@@ -18,20 +18,20 @@ class Moteurs :
 		   back
 	"""
 	pinsBackMotors = {
-		enA : -1,
-		enB : -1,
-		in1 : -1,
-		in2 : -1,
-		in3 : -1,
-		in4 : -1
+		"enA" : -1,
+		"enB" : -1,
+		"in1" : -1,
+		"in2" : -1,
+		"in3" : -1,
+		"in4" : -1
 	}
 	pinFrontMotors = {
-		enA : -1,
-		enB : -1,
-		in1 : -1,
-		in2 : -1,
-		in3 : -1,
-		in4 : -1
+		"enA" : -1,
+		"enB" : -1,
+		"in1" : -1,
+		"in2" : -1,
+		"in3" : -1,
+		"in4" : -1
 		
 	}
 	
@@ -112,41 +112,41 @@ class Moteurs :
 	
 	# TODO : vérifier les pins de direction
 	def moveMotor(self, side, motor, speed, direction) :
-		if "front" : 
-			if en = "F1" :
+		if side == "front" : 
+			if en == "F1" :
 			
 				if direction : 
-					GPIO.output(pinFrontMotors["in1", GPIO.LOW)
-					GPIO.output(pinFrontMotors["in2", GPIO.HIGH)
+					GPIO.output(pinFrontMotors["in1"], GPIO.LOW)
+					GPIO.output(pinFrontMotors["in2"], GPIO.HIGH)
 				else : 
-					GPIO.output(pinFrontMotors["in2", GPIO.LOW)
-					GPIO.output(pinFrontMotors["in1", GPIO.HIGH)
+					GPIO.output(pinFrontMotors["in2"], GPIO.LOW)
+					GPIO.output(pinFrontMotors["in1"], GPIO.HIGH)
 				pwmEnA.start(speed)
-			elif en = "F2" :
+			elif en == "F2" :
 				if direction : 
-					GPIO.output(pinFrontMotors["in4", GPIO.LOW)
-					GPIO.output(pinFrontMotors["in3", GPIO.HIGH)
+					GPIO.output(pinFrontMotors["in4"], GPIO.LOW)
+					GPIO.output(pinFrontMotors["in3"], GPIO.HIGH)
 				else : 
-					GPIO.output(pinFrontMotors["in3", GPIO.LOW)
-					GPIO.output(pinFrontMotors["in4", GPIO.HIGH)
+					GPIO.output(pinFrontMotors["in3"], GPIO.LOW)
+					GPIO.output(pinFrontMotors["in4"], GPIO.HIGH)
 				pwmEnB.start(speed)
 			return
-		elif "back" : 
-			if en = "B2" :
+		elif side == "back" : 
+			if en == "B2" :
 				if direction : 
-					GPIO.output(pinBackMotors["in1", GPIO.LOW)
-					GPIO.output(pinBackMotors["in2", GPIO.HIGH)
+					GPIO.output(pinBackMotors["in1"], GPIO.LOW)
+					GPIO.output(pinBackMotors["in2"], GPIO.HIGH)
 				else : 
-					GPIO.output(pinBackMotors["in2", GPIO.LOW)
-					GPIO.output(pinBackMotors["in1", GPIO.HIGH)
+					GPIO.output(pinBackMotors["in2"], GPIO.LOW)
+					GPIO.output(pinBackMotors["in1"], GPIO.HIGH)
 					pwmEnA.start(speed)
-			elif en = "B1" :
+			elif en == "B1" :
 				if direction : 
-					GPIO.output(pinBackMotors["in3", GPIO.LOW)
-					GPIO.output(pinBackMotors["in4", GPIO.HIGH)
+					GPIO.output(pinBackMotors["in3"], GPIO.LOW)
+					GPIO.output(pinBackMotors["in4"], GPIO.HIGH)
 				else : 
-					GPIO.output(pinBackMotors["in4", GPIO.LOW)
-					GPIO.output(pinBackMotors["in3", GPIO.HIGH)
+					GPIO.output(pinBackMotors["in4"], GPIO.LOW)
+					GPIO.output(pinBackMotors["in3"], GPIO.HIGH)
 				pwmEnB.start(speed)
 			return 
 		else : 
@@ -154,9 +154,10 @@ class Moteurs :
 	
 	# TODO : Définir pwm et range des coordonnées
 	def rotation(self, coordsRotation) :
-		coordsRotation[0] = min(max(coordsRotation[0], MIN_XCOORDS_ROT, MAX_XCOORDS_ROT) :
+		coordsRotation[0] = min(max(coordsRotation[0], MIN_XCOORDS_ROT, MAX_XCOORDS_ROT))
+                                
 		if coordsRotation[0] < MAX_XCOORDS_DEAD and coordsRotation[0] > MIN_XCOORDS_DEAD :
-			continue
+			return
 		# rotationClockWise 
 		elif coordsRotation > 0 :
 			moveMotor("front", "F1", (abs(coordsRotation[0])/MAX_XCOORDS_ROT) * MAXIMUM_PWM , 0)
@@ -171,14 +172,14 @@ class Moteurs :
 	
 	# TODO : Définir pwm et range des coordonnées
 	def translation(self, coordsTranslation) :
-		coordsTranslation[0] = min(max(coordsTranslation[0], MIN_XCOORDS_TRANS, MAX_XCOORDS_TRANS)
-		coordsTranslation[1] = min(max(coordsTranslation[1], MIN_YCOORDS_TRANS, MAX_YCOORDS_TRANS)
+		coordsTranslation[0] = min(max(coordsTranslation[0], MIN_XCOORDS_TRANS, MAX_XCOORDS_TRANS))
+		coordsTranslation[1] = min(max(coordsTranslation[1], MIN_YCOORDS_TRANS, MAX_YCOORDS_TRANS))
 		# Dead Point
-		if coordsTranslation[0] < MAX_XCOORDS_DEAD  and coordsTranslation[0] > MIN_XCOORDS_DEAD and coordsTranslation[1] < MAX_YCOORDS_DEAD  and coordsTranslation[1] > MIN_YCOORDS_DEAD :
-			continue
+		if (coordsTranslation[0] < MAX_XCOORDS_DEAD)  and (coordsTranslation[0] > MIN_XCOORDS_DEAD) and (coordsTranslation[1] < MAX_YCOORDS_DEAD)  and (coordsTranslation[1] > MIN_YCOORDS_DEAD) :
+			return
 		
 		# Avancée 
-		elif coordsTranslation[0] > MIN_XCOORDS_DEAD and coordsTranslation[0] < MAX_XCOORDS_DEAD and coordsTranslation[1] > MAX_YCOORDS_DEAD and coordsTranslation[1] < MAX_YCOORDS_TRANS :
+		elif (coordsTranslation[0] > MIN_XCOORDS_DEAD) and coordsTranslation[0] < MAX_XCOORDS_DEAD and coordsTranslation[1] > MAX_YCOORDS_DEAD and coordsTranslation[1] < MAX_YCOORDS_TRANS :
 			moveMotor("front", "F1", (abs(coordsTranslation[1])/MAX_YCOORDS_TRANS) * MAXIMUM_PWM , 0)
 			moveMotor("front", "F2", (abs(coordsTranslation[1])/MAX_YCOORDS_TRANS) * MAXIMUM_PWM , 1)
 			moveMotor("back", "B1", (abs(coordsTranslation[1])/MAX_YCOORDS_TRANS) * MAXIMUM_PWM , 1)
@@ -194,45 +195,45 @@ class Moteurs :
 		
 		# Translation droite 
 		elif coordsTranslation[0] > MAX_XCOORDS_TRANS  and coordsTranslation[0] < MAX_XCOORDS_DEAD and coordsTranslation[1] > MIN_YCOORDS_DEAD and coordsTranslation[1] < MAX_YCOORDS_DEAD :
-			moveMotor("front", "F1", (abs(coordsTranslation[0])/,MAX_XCOORDS_TRANS) * MAXIMUM_PWM, 0)
-			moveMotor("front", "F2", (abs(coordsTranslation[0])/,MAX_XCOORDS_TRANS) * MAXIMUM_PWM, 1)
-			moveMotor("back", "B1", (abs(coordsTranslation[0])/,MAX_XCOORDS_TRANS) * MAXIMUM_PWM, 1)
-			moveMotor("back", "B2", (abs(coordsTranslation[0])/,MAX_XCOORDS_TRANS) * MAXIMUM_PWM, 0)
+			moveMotor("front", "F1", (abs(coordsTranslation[0])/MAX_XCOORDS_TRANS) * MAXIMUM_PWM, 0)
+			moveMotor("front", "F2", (abs(coordsTranslation[0])/MAX_XCOORDS_TRANS) * MAXIMUM_PWM, 1)
+			moveMotor("back", "B1", (abs(coordsTranslation[0])/MAX_XCOORDS_TRANS) * MAXIMUM_PWM, 1)
+			moveMotor("back", "B2", (abs(coordsTranslation[0])/MAX_XCOORDS_TRANS) * MAXIMUM_PWM, 0)
 		
 		# Translation gauche 
 		elif coordsTranslation[0] > MIN_XCOORDS_TRANS  and coordsTranslation[0] < MIN_XCOORDS_DEAD and coordsTranslation[1] > MIN_YCOORDS_DEAD and coordsTranslation[1] < MAX_YCOORDS_DEAD :
-			moveMotor("front", "F1", (abs(coordsTranslation[0])/, MAX_XCOORDS_TRANS) * MAXIMUM_PWM , 1)
-			moveMotor("front", "F2", (abs(coordsTranslation[0])/, MAX_XCOORDS_TRANS) * MAXIMUM_PWM , 0)
-			moveMotor("back", "B1", (abs(coordsTranslation[0])/, MAX_XCOORDS_TRANS) * MAXIMUM_PWM, 0)
-			moveMotor("back", "B2", (abs(coordsTranslation[0])/, MAX_XCOORDS_TRANS) * MAXIMUM_PWM, 1)
+			moveMotor("front", "F1", (abs(coordsTranslation[0])/ MAX_XCOORDS_TRANS) * MAXIMUM_PWM , 1)
+			moveMotor("front", "F2", (abs(coordsTranslation[0])/ MAX_XCOORDS_TRANS) * MAXIMUM_PWM , 0)
+			moveMotor("back", "B1", (abs(coordsTranslation[0])/ MAX_XCOORDS_TRANS) * MAXIMUM_PWM, 0)
+			moveMotor("back", "B2", (abs(coordsTranslation[0])/ MAX_XCOORDS_TRANS) * MAXIMUM_PWM, 1)
 			
 		
 		# Diagonale haut gauche 
 		elif coordsTranslation[0] > MIN_XCOORDS_TRANS and coordsTranslation[0] < MIN_XCOORDS_DEAD  and coordsTranslation[1] > MAX_YCOORDS_DEAD and coordsTranslation[1] < MAX_YCOORDS_TRANS :
-			moveMotor("front", "F1", (0 , 0)
+			moveMotor("front", "F1", (0 , 0))
 			moveMotor("front", "F2", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (MAX_XCOORDS_TRANS + MAX_YCOORDS_TRANS)) * MAXIMUM_PWM, 0)
 			moveMotor("back", "B1", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (MAX_XCOORDS_TRANS + MAX_YCOORDS_TRANS)) * MAXIMUM_PWM, 1)
-			moveMotor("back", "B2", (0, 0)
+			moveMotor("back", "B2", (0, 0))
 			
 		# Diagonale haut droite 
 		elif coordsTranslation[0] > MAX_XCOORDS_DEAD  and coordsTranslation[0] < MAX_XCOORDS_TRANS and coordsTranslation[1] > MAX_YCOORDS_DEAD and coordsTranslation[1] < MAX_YCOORDS_TRANS :
 			moveMotor("front", "F1", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (MAX_XCOORDS_TRANS + MAX_YCOORDS_TRANS)) * MAXIMUM_PWM, 0)
-			moveMotor("front", "F2", (0, 0)
-			moveMotor("back", "B1", (0, 1)
+			moveMotor("front", "F2", (0, 0))
+			moveMotor("back", "B1", (0, 1))
 			moveMotor("back", "B2", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (MAX_XCOORDS_TRANS + MAX_YCOORDS_TRANS)) * MAXIMUM_PWM, 0)	
 		
 		# Diagonale bas gauche 
 		elif coordsTranslation[0] > MIN_XCOORDS_TRANS and coordsTranslation[0] < MIN_XCOORDS_DEAD  and coordsTranslation[1] > MAX_YCOORDS_TRANS and coordsTranslation[1] < MIN_YCOORDS_DEAD :
-			moveMotor("front", "F1", (0 , 0)
+			moveMotor("front", "F1", (0 , 0))
 			moveMotor("front", "F2", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (MAX_XCOORDS_TRANS + MAX_YCOORDS_TRANS)) * MAXIMUM_PWM, 1)
 			moveMotor("back", "B1", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (MAX_XCOORDS_TRANS + MAX_YCOORDS_TRANS)) * MAXIMUM_PWM, 0)
-			moveMotor("back", "B2", (0, 0)
+			moveMotor("back", "B2", (0, 0))
 			
 		# Diagonale bas droite 
 		elif cocoordsTranslation[0] > MAX_XCOORDS_DEAD  and coordsTranslation[0] < MAX_XCOORDS_TRANS and coordsTranslation[1] > MAX_YCOORDS_TRANS and coordsTranslation[1] < MIN_YCOORDS_DEAD : 
 			moveMotor("front", "F1", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (MAX_XCOORDS_TRANS + MAX_YCOORDS_TRANS)) * MAXIMUM_PWM, 1)
-			moveMotor("front", "F2", (0, 0)
-			moveMotor("back", "B1", (0, 1)
+			moveMotor("front", "F2", (0, 0))
+			moveMotor("back", "B1", (0, 1))
 			moveMotor("back", "B2", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (MAX_XCOORDS_TRANS + MAX_YCOORDS_TRANS)) * MAXIMUM_PWM, 1)	
 		
 		
