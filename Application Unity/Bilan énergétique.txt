@@ -1,0 +1,11 @@
+Rasberry pi 3B 
+
+Puissance nominale : 
+800 mA (4 W )
+
+Consommation maximale mesurée : 
+720 mA
+
+Alimentation : 
+5 volt via Micro-B USB ou GPIO header
+
