@@ -3,11 +3,11 @@ import RPi.GPIO as GPIO
 class Canon :
     
     servoBase = {
-        "pin" : -1
+        "pin" : -1,
         "angle" : 0
         }
     servoCanon = {
-        "pin" : -1
+        "pin" : -1,
         "angle" : 0
         }
     pwmBase = 0
@@ -19,12 +19,12 @@ class Canon :
         servoBase["pin"] = pinBase
         servoCanon["angle"] = pinCanon
         GPIO.setmode(GPIO.BOARD)
-		
-		GPIO.setup(pinBase,GPIO.OUT)
-		GPIO.setup(pinCanon,GPIO.OUT)
-		
-		pwmBase = GPIO.PWM(pinBase,GPIO.OUT)
-		pwmCanon = GPIO.PWM(pinCanon,GPIO.OUT)
+        
+        GPIO.setup(pinBase,GPIO.OUT)
+        GPIO.setup(pinCanon,GPIO.OUT)
+
+        pwmBase = GPIO.PWM(pinBase,GPIO.OUT)
+        pwmCanon = GPIO.PWM(pinCanon,GPIO.OUT)
         
     def angleToPWM (self, angle):
         angle =  min(max(angle, 0, MAX_ANGLE))
