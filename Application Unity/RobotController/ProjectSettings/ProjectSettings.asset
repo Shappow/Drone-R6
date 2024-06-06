@@ -140,10 +140,7 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 1.0.2
-  preloadedAssets:
-  - {fileID: -7128192671080342646, guid: 31aee68ce67a8b74d89b39ba5e2ea8af, type: 2}
-  - {fileID: 11400000, guid: 5d1dd2a30607caa4e9ef2e296fed4d4e, type: 2}
-  - {fileID: 11400000, guid: 44261696735675b4aa7a15b4a608ea34, type: 2}
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -254,11 +251,11 @@ PlayerSettings:
   clonedFromGUID: 3df0038eaa8740a438c96d5b01ba661e
   templatePackageId: com.unity.template.mobile3d@3.0.0
   templateDefaultScene: Assets/Scenes/SampleScene.unity
-  useCustomMainManifest: 1
+  useCustomMainManifest: 0
   useCustomLauncherManifest: 0
-  useCustomMainGradleTemplate: 1
+  useCustomMainGradleTemplate: 0
   useCustomLauncherGradleManifest: 0
-  useCustomBaseGradleTemplate: 1
+  useCustomBaseGradleTemplate: 0
   useCustomGradlePropertiesTemplate: 0
   useCustomGradleSettingsTemplate: 0
   useCustomProguardFile: 0

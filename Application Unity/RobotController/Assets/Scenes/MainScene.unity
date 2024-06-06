@@ -1777,9 +1777,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 570649812}
-        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: SendButtonData
+      - m_Target: {fileID: 11500000, guid: f0e1479ed7d8a794daaaff6d20534ed8, type: 3}
+        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
