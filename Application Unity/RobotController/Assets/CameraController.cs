@@ -61,20 +61,6 @@ public class CameraController : MonoBehaviour
         // Envoyez les données au robot
         stream.Write(data, 0, data.Length);
     }
-
-    private string GetVideoStream()
-    {
-        return reader.ReadLine();
-
-    }
-    private Texture2D DecodeVideoData(string videoData)
-    {
-        // Implémenter le décodage vidéo à partir des données reçues
-        // Utiliser une bibliothèque de décodage vidéo comme FFmpeg ou des bibliothèques spécifiques à Unity
-        // Retourner une texture Unity contenant l'image décodée
-        // Exemple simplifié :
-        return videoTexture;
-    }
     private void OnDestroy()
     {
         // Fermez la connexion lorsque le script est détruit
