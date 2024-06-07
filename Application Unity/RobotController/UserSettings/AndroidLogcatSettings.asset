@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "R58N23SKQZA",
         "name": "com.Ynov.RobotController",
-        "processId": 15980,
+        "processId": 18803,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -24,6 +24,12 @@
             "deviceId": "R58N23SKQZA",
             "name": "com.Ynov.RobotController",
             "processId": 15980,
+            "exited": false
+        },
+        {
+            "deviceId": "R58N23SKQZA",
+            "name": "com.Ynov.RobotController",
+            "processId": 18803,
             "exited": false
         }
     ],

@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "E:\\Ynov_Projet\\Drone-R6\\Application Unity\\RobotController\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{72EAB95F-0F6D-EF8A-BC37-DEA3EF551049}|Assembly-CSharp.csproj|E:\\Ynov_Projet\\Drone-R6\\Application Unity\\RobotController\\assets\\buttoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72EAB95F-0F6D-EF8A-BC37-DEA3EF551049}|Assembly-CSharp.csproj|solutionrelative:assets\\buttoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Ynov_Projet\\Drone-R6\\Application Unity\\RobotController\\Assets\\Plugins\\Android\\AndroidManifest.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Plugins\\Android\\AndroidManifest.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
@@ -23,11 +27,7 @@
       "RelativeMoniker": "D:0:0:{72EAB95F-0F6D-EF8A-BC37-DEA3EF551049}|Assembly-CSharp.csproj|solutionrelative:assets\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{72EAB95F-0F6D-EF8A-BC37-DEA3EF551049}|Assembly-CSharp.csproj|E:\\Ynov_Projet\\Drone-R6\\Application Unity\\RobotController\\assets\\buttoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{72EAB95F-0F6D-EF8A-BC37-DEA3EF551049}|Assembly-CSharp.csproj|solutionrelative:assets\\buttoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{72EAB95F-0F6D-EF8A-BC37-DEA3EF551049}|Assembly-CSharp.csproj|e:\\ynov_projet\\drone-r6\\application unity\\robotcontroller\\assets\\videostream.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{72EAB95F-0F6D-EF8A-BC37-DEA3EF551049}|Assembly-CSharp.csproj|E:\\Ynov_Projet\\Drone-R6\\Application Unity\\RobotController\\assets\\videostream.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{72EAB95F-0F6D-EF8A-BC37-DEA3EF551049}|Assembly-CSharp.csproj|solutionrelative:assets\\videostream.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -38,20 +38,18 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "AndroidManifest.xml",
               "DocumentMoniker": "E:\\Ynov_Projet\\Drone-R6\\Application Unity\\RobotController\\Assets\\Plugins\\Android\\AndroidManifest.xml",
               "RelativeDocumentMoniker": "Assets\\Plugins\\Android\\AndroidManifest.xml",
               "ToolTip": "E:\\Ynov_Projet\\Drone-R6\\Application Unity\\RobotController\\Assets\\Plugins\\Android\\AndroidManifest.xml",
               "RelativeToolTip": "Assets\\Plugins\\Android\\AndroidManifest.xml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
-              "WhenOpened": "2024-06-06T10:40:01.54Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-06T10:40:01.54Z"
             },
             {
               "$type": "Document",
@@ -63,25 +61,24 @@
               "RelativeToolTip": "Assets\\VideoStream.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-04T10:08:48.604Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-04T10:08:48.604Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "ButtonController.cs",
               "DocumentMoniker": "E:\\Ynov_Projet\\Drone-R6\\Application Unity\\RobotController\\Assets\\ButtonController.cs",
               "RelativeDocumentMoniker": "Assets\\ButtonController.cs",
               "ToolTip": "E:\\Ynov_Projet\\Drone-R6\\Application Unity\\RobotController\\Assets\\ButtonController.cs",
               "RelativeToolTip": "Assets\\ButtonController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACUAAAAAAAAA",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAAwDcAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-01T13:51:33.318Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "CameraController.cs",
               "DocumentMoniker": "E:\\Ynov_Projet\\Drone-R6\\Application Unity\\RobotController\\Assets\\CameraController.cs",
               "RelativeDocumentMoniker": "Assets\\CameraController.cs",
@@ -89,12 +86,11 @@
               "RelativeToolTip": "Assets\\CameraController.cs",
               "ViewState": "AQIAADAAAAAAAAAAAAAYwD4AAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-01T13:13:29.288Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-01T13:13:29.288Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "RotationTextController.cs",
               "DocumentMoniker": "E:\\Ynov_Projet\\Drone-R6\\Application Unity\\RobotController\\Assets\\Scripts\\RotationTextController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\RotationTextController.cs",
@@ -102,12 +98,11 @@
               "RelativeToolTip": "Assets\\Scripts\\RotationTextController.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-01T12:54:11.566Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-01T12:54:11.566Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "TranslationController.cs",
               "DocumentMoniker": "E:\\Ynov_Projet\\Drone-R6\\Application Unity\\RobotController\\Assets\\Scripts\\TranslationController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\TranslationController.cs",
@@ -115,12 +110,11 @@
               "RelativeToolTip": "Assets\\Scripts\\TranslationController.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-01T12:54:00.261Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-01T12:54:00.261Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ReadmeEditor.cs",
               "DocumentMoniker": "E:\\Ynov_Projet\\Drone-R6\\Application Unity\\RobotController\\Assets\\TutorialInfo\\Scripts\\Editor\\ReadmeEditor.cs",
               "RelativeDocumentMoniker": "Assets\\TutorialInfo\\Scripts\\Editor\\ReadmeEditor.cs",
@@ -128,8 +122,7 @@
               "RelativeToolTip": "Assets\\TutorialInfo\\Scripts\\Editor\\ReadmeEditor.cs",
               "ViewState": "AQIAALYAAAAAAAAAAAAUwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-01T12:22:37.102Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-01T12:22:37.102Z"
             }
           ]
         }
