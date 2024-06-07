@@ -83,7 +83,7 @@ class Moteurs :
 			"in3" : frontIn3,
 			"in4" : frontIn4
 		} 
-		GPIO.setmode(GPIO.BOARD)
+		GPIO.setmode(GPIO.BCM)
 		
 		
 		GPIO.setup(EnA,GPIO.OUT)

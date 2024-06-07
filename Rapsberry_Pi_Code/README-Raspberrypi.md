@@ -61,9 +61,44 @@ And select Yes. After that, use finish and reboot your rapsberry pi. You can do 
 sudo reboot
 ```
 ### Importing all of the necessary librairies
-Go to Raspberry Pi Code folder into your 
-
+Open a terminal in your Raspberry_Pi_Code folder. Be sure the script is executable by doing : 
+``` bash
+chmod +x imports.sh
+``` 
+Launch the script to import all of the mandatory libraries.
+```
+sudo ./imports.sh
+```
 ### Setting up the network
+In this step, we will setup the raspberry pi to be a wifi hotspot.
+#### ⚠️When the raspberry pi is setup as a wifi hotspot, you can not connect to another wifi. You will be without an internet connection except if you plug in a ethernet cable. You can revert this state and be back to normal by using the "restore_network.sh script.⚠️.
+To setup the network, open a terminal in your Raspberry_Pi_Code folder, be sure the script is executable by doing : 
+``` bash
+chmod +x setup_network.sh
+``` 
+And start it : 
+```
+sudo ./setup_network.sh
+```
+To get back the network to normal, do : 
+``` bash
+chmod +x restore_network.sh
+``` 
+```
+sudo ./restore_network.sh
+```
+### Starting the Video streaming server
+We will setup the server which will stream the camera feed. Use this command in the Raspberry_Pi_Code folder : 
+``` bash
+python3 video_stream.py
+```
+To check if the video stream is working correctly open vlc and go to media>network-streaming, enter http://192.168.4.1:5000 and click on start.
+#### ⚠️I am aware that there is a lot of latency. I will work on reducing in the future. The video is stuck at 15 FPS on purpose. You can modify this value in the video_stream.py by changing the value of the variable "FPS"⚠️
 
+## Motors and canon setup
+
+#### This part needs more tests to be fully functionnal + I need to add the coordinates receiver to correctly pilot the robot. For now the code is only made for testing.
+
+Open the main.py, canon.py and motor.py files. Into the main instantiate an object motor and an object canon. Enter the right parameters as asked into the init function. Be aware of the pins.
 
 
