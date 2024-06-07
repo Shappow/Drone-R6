@@ -40,29 +40,29 @@ class Moteurs :
 	pwmEnA = 0
 	pwmEnB = 0
 	
-	MAXIMUM_PWM = 100
+	MAXIMUM_PWM = 50
 	
 	# Constantes Translation
-	MAX_XCOORDS_TRANS = 100
-	MIN_XCOORDS_TRANS = 0
+	MAX_XCOORDS_TRANS = 50
+	MIN_XCOORDS_TRANS = -50
 	
-	MAX_YCOORDS_TRANS= 100
-	MIN_YCOORDS_TRANS = 0
+	MAX_YCOORDS_TRANS= 50
+	MIN_YCOORDS_TRANS = -50
 	
 	# Constantes Rotation
-	MAX_XCOORDS_ROT= 100
-	MAX_YCOORDS_ROT = 100
+	MAX_XCOORDS_ROT= 50
+	MAX_YCOORDS_ROT = 50
 	
-	MIN_XCOORDS_ROT = 0
-	MIN_YCOORDS_ROT = 0
+	MIN_XCOORDS_ROT = -50
+	MIN_YCOORDS_ROT = -50
 	
 	# Constantes Dead Point
 	
-	MAX_XCOORDS_DEAD = 60
-	MIN_XCOORDS_DEAD = 40
+	MAX_XCOORDS_DEAD = 20
+	MIN_XCOORDS_DEAD = -20
 	
-	MAX_YCOORDS_DEAD= 60
-	MIN_YCOORDS_DEAD = 40
+	MAX_YCOORDS_DEAD= 20
+	MIN_YCOORDS_DEAD = -20
 	
 	def __init__ (self, EnA, EnB, backIn1,backIn2,backIn3,backIn4,frontIn1,frontIn2,frontIn3,frontIn4) :
 		self.pinBackMotors  = {
@@ -106,21 +106,33 @@ class Moteurs :
 		GPIO.setup(backIn2,GPIO.OUT)
 		GPIO.setup(backIn3,GPIO.OUT)
 		GPIO.setup(backIn4,GPIO.OUT)
-
+		print(self.pinFrontMotors)
 		
-		
+		print(self.pinBackMotors)
+	def reset_PWM (self):
+		GPIO.output(self.pinFrontMotors["in1"], GPIO.LOW)
+		GPIO.output(self.pinFrontMotors["in2"], GPIO.LOW)
+		GPIO.output(self.pinBackMotors["in1"], GPIO.LOW)
+		GPIO.output(self.pinBackMotors["in2"], GPIO.LOW)
+		GPIO.output(self.pinFrontMotors["in3"], GPIO.LOW)
+		GPIO.output(self.pinFrontMotors["in4"], GPIO.LOW)
+		GPIO.output(self.pinBackMotors["in3"], GPIO.LOW)
+		GPIO.output(self.pinBackMotors["in4"], GPIO.LOW)
+		self.pwmEnA.ChangeDutyCycle(0)
+		self.pwmEnB.ChangeDutyCycle(0)
+	
 	# side is "front" or "back"	
 	# motor is the motor name (F1,F2,F3,F4)
-	# direction 1 forward 0 backwards
+	# isClockWise == true clock wise else its counter clockwise
 	
 	# TODO : vérifier les pins de direction
-	def moveMotor(self, side, motor, speed, direction):
+	def moveMotor(self, side, motor, speed, isForward):
 		if side == "front":
 			if motor == "F1":
 				if speed == 0:
 					GPIO.output(self.pinFrontMotors["in1"], GPIO.LOW)
 					GPIO.output(self.pinFrontMotors["in2"], GPIO.LOW)
-				elif direction:
+				elif isForward == True:
 					GPIO.output(self.pinFrontMotors["in1"], GPIO.LOW)
 					GPIO.output(self.pinFrontMotors["in2"], GPIO.HIGH)
 				else:
@@ -131,7 +143,7 @@ class Moteurs :
 				if speed == 0:
 					GPIO.output(self.pinFrontMotors["in3"], GPIO.LOW)
 					GPIO.output(self.pinFrontMotors["in4"], GPIO.LOW)
-				elif direction:
+				elif isForward == True:
 					GPIO.output(self.pinFrontMotors["in4"], GPIO.LOW)
 					GPIO.output(self.pinFrontMotors["in3"], GPIO.HIGH)
 				else:
@@ -144,7 +156,7 @@ class Moteurs :
 				if speed == 0:
 					GPIO.output(self.pinBackMotors["in1"], GPIO.LOW)
 					GPIO.output(self.pinBackMotors["in2"], GPIO.LOW)
-				elif direction:
+				elif isForward == True:
 					GPIO.output(self.pinBackMotors["in1"], GPIO.LOW)
 					GPIO.output(self.pinBackMotors["in2"], GPIO.HIGH)
 				else:
@@ -155,7 +167,7 @@ class Moteurs :
 				if speed == 0:
 					GPIO.output(self.pinBackMotors["in3"], GPIO.LOW)
 					GPIO.output(self.pinBackMotors["in4"], GPIO.LOW)
-				if direction:
+				if isForward == True:
 					GPIO.output(self.pinBackMotors["in3"], GPIO.LOW)
 					GPIO.output(self.pinBackMotors["in4"], GPIO.HIGH)
 				else:
@@ -165,88 +177,100 @@ class Moteurs :
 			return
 		else:
 			print("error, no side found")
+			
 	# TODO : Définir pwm et range des coordonnées
 	def rotation(self, coordsRotation) :
-		coordsRotation[0] = min(max(coordsRotation[0], self.MIN_XCOORDS_ROT, self.MAX_XCOORDS_ROT))
-                                
+		if coordsRotation[0] >= self.MAX_XCOORDS_ROT :
+			coordsRotation[0] = self.MAX_XCOORDS_ROT
+		elif coordsRotation[0] <= self.MIN_XCOORDS_ROT :
+			coordsRotation[0] = self.MIN_XCOORDS_ROT
+             
 		if coordsRotation[0] < self.MAX_XCOORDS_DEAD and coordsRotation[0] > self.MIN_XCOORDS_DEAD :
 			return
 		# rotationClockWise 
-		elif coordsRotation > 0 :
-			moveMotor("front", "F1", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , 0)
-			moveMotor("front", "F2", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , 0)
-			moveMotor("back", "B3", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , 1)
-			moveMotor("back", "B4", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , 1)
-		elif coordsRotation < 0 :
-			moveMotor("front", "F1", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , 1)
-			moveMotor("front", "F2", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , 1)
-			moveMotor("back", "B3", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , 0)
-			moveMotor("back", "B4", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , 0)
+		elif coordsRotation[0] > self.MAX_XCOORDS_ROT/2 :
+			self.moveMotor("front", "F1", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , True)
+			self.moveMotor("front", "F2", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , False)
+			self.moveMotor("back", "B1", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , True)
+			self.moveMotor("back", "B2", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , False)
+		elif coordsRotation[0] < self.MAX_XCOORDS_ROT/2 :
+			self.moveMotor("front", "F1", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , True)
+			self.moveMotor("front", "F2", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , False)
+			self.moveMotor("back", "B1", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , True)
+			self.moveMotor("back", "B2", (abs(coordsRotation[0])/self.MAX_XCOORDS_ROT) * self.MAXIMUM_PWM , False)
 	
 	# TODO : Définir pwm et range des coordonnées
 	def translation(self, coordsTranslation) :
-		coordsTranslation[0] = min(max(coordsTranslation[0], self.MIN_XCOORDS_TRANS, self.MAX_XCOORDS_TRANS))
-		coordsTranslation[1] = min(max(coordsTranslation[1], self.MIN_YCOORDS_TRANS, self.MAX_YCOORDS_TRANS))
+		if coordsTranslation[0] >= self.MAX_XCOORDS_TRANS :        
+			coordsTranslation[0] = self.MAX_XCOORDS_TRANS
+		elif coordsTranslation[0] <= self.MIN_XCOORDS_TRANS :
+			coordsTranslation[0] = self.MIN_XCOORDS_TRANS
+			
+		if coordsTranslation[1] >= self.MAX_YCOORDS_TRANS :
+			coordsTranslation[1] = self.MAX_YCOORDS_TRANS
+		elif coordsTranslation[1] <= self.MIN_YCOORDS_TRANS :
+			coordsTranslation[1] = self.MIN_YCOORDS_TRANS
+
 		# Dead Point
 		if (coordsTranslation[0] < self.MAX_XCOORDS_DEAD)  and (coordsTranslation[0] > self.MIN_XCOORDS_DEAD) and (coordsTranslation[1] < self.MAX_YCOORDS_DEAD)  and (coordsTranslation[1] > self.MIN_YCOORDS_DEAD) :
 			return
 		
 		# Avancée 
 		elif (coordsTranslation[0] > self.MIN_XCOORDS_DEAD) and coordsTranslation[0] < self.MAX_XCOORDS_DEAD and coordsTranslation[1] > self.MAX_YCOORDS_DEAD and coordsTranslation[1] < self.MAX_YCOORDS_TRANS :
-			moveMotor("front", "F1", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM , 0)
-			moveMotor("front", "F2", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM , 1)
-			moveMotor("back", "B1", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM , 1)
-			moveMotor("back", "B2", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM, 0)
+			self.moveMotor("front", "F1", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM , True)
+			self.moveMotor("front", "F2", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM , True)
+			self.moveMotor("back", "B1", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM , True)
+			self.moveMotor("back", "B2", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM, True)
 		
 		# Recul 
-		elif coordsTranslation[0] > self.MIN_XCOORDS_DEAD  and coordsTranslation[0] < self.MAX_XCOORDS_DEAD and coordsTranslation[1] > self.MIN_YCOORDS_DEAD and coordsTranslation[1] < self.MIN_YCOORDS_TRANS :
-			moveMotor("front", "F1", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM , 1)
-			moveMotor("front", "F2", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM , 0)
-			moveMotor("back", "B1", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM , 0)
-			moveMotor("back", "B2", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM, 1)
+		elif coordsTranslation[0] > self.MIN_XCOORDS_DEAD  and coordsTranslation[0] < self.MAX_XCOORDS_DEAD and coordsTranslation[1] < self.MIN_YCOORDS_DEAD and coordsTranslation[1] > self.MIN_YCOORDS_TRANS :
+			self.moveMotor("front", "F1", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM , False)
+			self.moveMotor("front", "F2", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM , False)
+			self.moveMotor("back", "B1", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM , False)
+			self.moveMotor("back", "B2", (abs(coordsTranslation[1])/self.MAX_YCOORDS_TRANS) * self.MAXIMUM_PWM, False)
 			
 		
 		# Translation droite 
 		elif coordsTranslation[0] > self.MAX_XCOORDS_TRANS  and coordsTranslation[0] < self.MAX_XCOORDS_DEAD and coordsTranslation[1] > self.MIN_YCOORDS_DEAD and coordsTranslation[1] < self.MAX_YCOORDS_DEAD :
-			moveMotor("front", "F1", (abs(coordsTranslation[0])/self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM, 0)
-			moveMotor("front", "F2", (abs(coordsTranslation[0])/self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM, 1)
-			moveMotor("back", "B1", (abs(coordsTranslation[0])/self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM, 1)
-			moveMotor("back", "B2", (abs(coordsTranslation[0])/self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM, 0)
+			self.moveMotor("front", "F1", (abs(coordsTranslation[0])/self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM, True)
+			self.moveMotor("front", "F2", (abs(coordsTranslation[0])/self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM, False)
+			self.moveMotor("back", "B1", (abs(coordsTranslation[0])/self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM, True)
+			self.moveMotor("back", "B2", (abs(coordsTranslation[0])/self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM, False)
 		
 		# Translation gauche 
 		elif coordsTranslation[0] > self.MIN_XCOORDS_TRANS  and coordsTranslation[0] < self.MIN_XCOORDS_DEAD and coordsTranslation[1] > self.MIN_YCOORDS_DEAD and coordsTranslation[1] < self.MAX_YCOORDS_DEAD :
-			moveMotor("front", "F1", (abs(coordsTranslation[0])/ self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM , 1)
-			moveMotor("front", "F2", (abs(coordsTranslation[0])/ self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM , 0)
-			moveMotor("back", "B1", (abs(coordsTranslation[0])/ self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM, 0)
-			moveMotor("back", "B2", (abs(coordsTranslation[0])/ self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM, 1)
+			self.moveMotor("front", "F1", (abs(coordsTranslation[0])/ self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM , False)
+			self.moveMotor("front", "F2", (abs(coordsTranslation[0])/ self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM , True)
+			self.moveMotor("back", "B1", (abs(coordsTranslation[0])/ self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM, False)
+			self.moveMotor("back", "B2", (abs(coordsTranslation[0])/ self.MAX_XCOORDS_TRANS) * self.MAXIMUM_PWM, True)
 			
 		
 		# Diagonale haut gauche 
 		elif coordsTranslation[0] > self.MIN_XCOORDS_TRANS and coordsTranslation[0] < self.MIN_XCOORDS_DEAD  and coordsTranslation[1] > self.MAX_YCOORDS_DEAD and coordsTranslation[1] < self.MAX_YCOORDS_TRANS :
-			moveMotor("front", "F1", (0 , 0))
-			moveMotor("front", "F2", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, 0)
-			moveMotor("back", "B1", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, 1)
-			moveMotor("back", "B2", (0, 0))
+			self.moveMotor("front", "F1", 0 , False)
+			self.moveMotor("front", "F2", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, True)
+			self.moveMotor("back", "B1", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, True)
+			self.moveMotor("back", "B2", 0, False)
 			
 		# Diagonale haut droite 
 		elif coordsTranslation[0] > self.MAX_XCOORDS_DEAD  and coordsTranslation[0] < self.MAX_XCOORDS_TRANS and coordsTranslation[1] > self.MAX_YCOORDS_DEAD and coordsTranslation[1] < self.MAX_YCOORDS_TRANS :
-			moveMotor("front", "F1", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, 0)
-			moveMotor("front", "F2", (0, 0))
-			moveMotor("back", "B1", (0, 1))
-			moveMotor("back", "B2", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, 0)	
+			self.moveMotor("front", "F1", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, True)
+			self.moveMotor("front", "F2", 0, False)
+			self.moveMotor("back", "B1", 0, True)
+			self.moveMotor("back", "B2", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, True)	
 		
 		# Diagonale bas gauche 
 		elif coordsTranslation[0] > self.MIN_XCOORDS_TRANS and coordsTranslation[0] < self.MIN_XCOORDS_DEAD  and coordsTranslation[1] > self.MAX_YCOORDS_TRANS and coordsTranslation[1] < self.MIN_YCOORDS_DEAD :
-			moveMotor("front", "F1", (0 , 0))
-			moveMotor("front", "F2", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, 1)
-			moveMotor("back", "B1", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, 0)
-			moveMotor("back", "B2", (0, 0))
+			self.moveMotor("front", "F1", 0 , False)
+			self.moveMotor("front", "F2", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, False)
+			self.moveMotor("back", "B1", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, False)
+			self.moveMotor("back", "B2", 0, True)
 			
 		# Diagonale bas droite 
-		elif cocoordsTranslation[0] > self.MAX_XCOORDS_DEAD  and coordsTranslation[0] < self.MAX_XCOORDS_TRANS and coordsTranslation[1] > self.MAX_YCOORDS_TRANS and coordsTranslation[1] < self.MIN_YCOORDS_DEAD : 
-			moveMotor("front", "F1", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, 1)
-			moveMotor("front", "F2", (0, 0))
-			moveMotor("back", "B1", (0, 1))
-			moveMotor("back", "B2", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, 1)	
+		elif coordsTranslation[0] > self.MAX_XCOORDS_DEAD  and coordsTranslation[0] < self.MAX_XCOORDS_TRANS and coordsTranslation[1] > self.MAX_YCOORDS_TRANS and coordsTranslation[1] < self.MIN_YCOORDS_DEAD : 
+			self.moveMotor("front", "F1", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, False)
+			self.moveMotor("front", "F2", 0, False)
+			self.moveMotor("back", "B1", 0, True)
+			self.moveMotor("back", "B2", ((abs(coordsTranslation[0])+ abs(coordsTranslation[1]))/ (self.MAX_XCOORDS_TRANS + self.MAX_YCOORDS_TRANS)) * self.MAXIMUM_PWM, False)	
 		
 		

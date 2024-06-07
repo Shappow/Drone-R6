@@ -1,32 +1,24 @@
 #!/bin/bash
 
-# Stop hostapd and dnsmasq services
-systemctl --user stop hostapd
-systemctl --user stop dnsmasq
-# Désactiver les services hostapd et dnsmasq
-systemctl --user disable hostapd
-systemctl --user disable dnsmasq
+# Restaurer la configuration par défaut de dhcpcd.conf
+sudo sed -i '/interface wlan0/d' /etc/dhcpcd.conf
+sudo sed -i '/static ip_address=192.168.4.1\/24/d' /etc/dhcpcd.conf
+sudo sed -i '/nohook wpa_supplicant/d' /etc/dhcpcd.conf
 
+# Arrêter les services
+sudo systemctl stop hostapd
+sudo systemctl stop dnsmasq
 
-# Restore the original dnsmasq configuration file if it exists
-if [ -f $HOME/dnsmasq.conf.orig ]; then
-  mv $HOME/dnsmasq.conf.orig $HOME/dnsmasq.conf
-fi
+# Désactiver les services
+sudo systemctl disable hostapd
+sudo systemctl disable dnsmasq
 
-# Restore the original dhcpcd.conf file by removing the added lines
-sed -i '/interface wlan0/d' $HOME/dhcpcd.conf
-sed -i '/static ip_address=192.168.4.1\/24/d' $HOME/dhcpcd.conf
-sed -i '/denyinterfaces eth0/d' $HOME/dhcpcd.conf
-sed -i '/denyinterfaces wlan0/d' $HOME/dhcpcd.conf
+# Restaurer le fichier dnsmasq.conf original
+sudo mv /etc/dnsmasq.conf.orig /etc/dnsmasq.conf
 
-# Restore the original network interfaces file if it exists
-if [ -f $HOME/interfaces.orig ]; then
-  mv $HOME/interfaces.orig $HOME/interfaces
-fi
+# Redémarrer le service dhcpcd
+sudo service dhcpcd restart
 
-# Enable and start the wpa_supplicant service to allow connection to other Wi-Fi networks
-systemctl --user unmask wpa_supplicant
-systemctl --user enable wpa_supplicant
-systemctl --user start wpa_supplicant
-
-echo "The network configuration has been restored to normal."
+# Instructions de fin
+echo "Le Raspberry Pi a été réinitialisé pour se connecter à un réseau
+Wi-Fi existant."
