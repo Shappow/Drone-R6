@@ -99,6 +99,6 @@ To check if the video stream is working correctly open vlc and go to media>netwo
 
 #### This part needs more tests to be fully functionnal + I need to add the coordinates receiver to correctly pilot the robot. For now the code is only made for testing.
 
-Open the main.py, canon.py and motor.py files. Into the main instantiate an object motor and an object canon. Enter the right parameters as asked into the init function. Be aware of the pins.
+Open the main.py, canon.py and motor.py files. Into the main instantiate an object motor and an object canon. Enter the right parameters as asked into the init function. Be aware of the pins it can change depending on the raspberry pi. You can try different funtions to see different behaviors of robot. **Don't forget : the robot will remember the last PWM you put, you could have motors that will still turn even if you stopped the code. Use reset_PWM() in the motors file to stop the pwm.**
 
 
