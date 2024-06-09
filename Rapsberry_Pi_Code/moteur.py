@@ -122,7 +122,7 @@ class Moteurs :
 		self.pwmEnB.ChangeDutyCycle(0)
 	
 	# side is either "front" or "back"	
-	# motor is the motor name (F1,F2,F3,F4)
+	# motor is the motor name (F1,F2,B1,B2)
 	# isClockWise == true clock wise else its counter clockwise
 	
 	def moveMotor(self, side, motor, speed, isForward):
